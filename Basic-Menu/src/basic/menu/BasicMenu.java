@@ -139,13 +139,6 @@ public class BasicMenu {
                     + " values.\n";
         }
         
-        // Max rule broken
-        if (maxVal > -1 && nbValues > maxVal) {
-            error += "You must enter a maximum of "
-                    + maxVal
-                    + " values.\n"; 
-        }
-        
         // At least one rule is broken
         if (!error.isEmpty()) {
             printEnterContinue(error, true);
@@ -157,7 +150,7 @@ public class BasicMenu {
     
     /**
      * <p>
-     * Computes plus
+     * Computes plus.
      * </p>
      * 
      * @return the result, {@code null} if user did'nt enter correct valyues
