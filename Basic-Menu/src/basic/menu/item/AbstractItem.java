@@ -109,11 +109,12 @@ abstract class AbstractItem implements MenuItem {
     
     /**
      * <p>
-     * Continue interaction after the user entered its data
+     * Continue interaction after the user entered its data.
      * </p>
-     * @param ui
-     * @param data
-     * @return 
+     * 
+     * @param ui the user interface
+     * @param data the array of entered values
+     * @return the result of interaction 
      */
     protected abstract String interact(UserInterface ui, String[] data);
     
