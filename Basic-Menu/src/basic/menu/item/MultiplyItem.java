@@ -27,6 +27,6 @@ class MultiplyItem extends AccumulatorItem {
      */
     @Override
     protected int accumulate(final int what, final int with) {
-        return what + with;
+        return what * with;
     }
 }
