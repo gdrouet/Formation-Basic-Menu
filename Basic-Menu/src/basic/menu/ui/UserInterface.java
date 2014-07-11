@@ -4,7 +4,10 @@
 
 package basic.menu.ui;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 
 /**
  * <p>
@@ -13,7 +16,7 @@ import java.io.IOException;
  * 
  * @author Guillaume DROUET
  */
-public interface UserInterface {
+public interface UserInterface extends UserInterfaceReader, UserInterfaceWriter {
     
     /**
      * <p>
@@ -23,7 +26,24 @@ public interface UserInterface {
      * @return the default implementation's instance
      */
     static UserInterface createDefault() {
-        return new StdIoUserInterface();
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        final PrintStream writer = System.out;
+    
+        final UserInterfaceWriter uiw = (message) -> writer.println(message);
+        final UserInterfaceReader uir = () -> reader.readLine();
+
+        return new UserInterface() {
+
+            @Override
+            public String read() throws IOException {
+                return uir.read();
+            }
+
+            @Override
+            public void info(String message) {
+                uiw.info(message);
+            }
+        };
     };
     
     /**
@@ -46,23 +66,4 @@ public interface UserInterface {
         
         return read();
     }
-    
-    /**
-     * <p>
-     * Show a message.
-     * </p>
-     * 
-     * @param message the message to show.
-     */
-    void info(String message);
-    
-    /**
-     * <p>
-     * Reads a value.
-     * </p>
-     * 
-     * @return the read value
-     * @throws IOException if an I/O error occurs
-     */
-    String read() throws IOException;
 }

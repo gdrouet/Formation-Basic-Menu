@@ -25,8 +25,8 @@ public interface MenuItem {
      */
     static MenuItem[] createDefault() {
         return new MenuItem[] {
-            new PlusItem(),
-            new MultiplyItem(),
+            new AccumulatorItem("Plus", (a, b) -> a + b, 0),
+            new AccumulatorItem("Multiply", (a, b) -> a * b, 1),
             new FactorialItem(),
         };
     };

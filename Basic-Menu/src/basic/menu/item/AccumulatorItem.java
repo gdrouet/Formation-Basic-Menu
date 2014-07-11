@@ -5,6 +5,7 @@
 package basic.menu.item;
 
 import basic.menu.ui.UserInterface;
+import java.util.function.BiFunction;
 
 /**
  * <p>
@@ -12,24 +13,40 @@ import basic.menu.ui.UserInterface;
  * during interaction with the user.
  * </p>
  * 
- * </p>
+ * <p>
  * An accumulator requires at least to values and don't have maximum values to
  * be entered by the user.
  * </p>
  *
  * @author Guillaume DROUET
  */
-abstract class AccumulatorItem extends AbstractItem {
+class AccumulatorItem extends AbstractItem {
 
+    /**
+     * Performs accumulation.
+     */
+    private final BiFunction<Integer, Integer, Integer> operation;
+    
+    /**
+     * Starter value for accumulation.
+     */
+    private final int starter;
+    
     /**
      * <p>
      * Builds an item with a title.
      * </p>
      * 
      * @param title title
+     * @param op the operation that cumumates
+     * @param accumation the accumulation initial value
      */
-    AccumulatorItem(final String title) {
+    AccumulatorItem(final String title,
+            final BiFunction<Integer, Integer, Integer> op,
+            final int accumulation) {
         super(title);
+        operation = op;
+        starter = accumulation;
     }
 
     /**
@@ -58,7 +75,7 @@ abstract class AccumulatorItem extends AbstractItem {
             return null;
         }
         
-        int res = 0;
+        int res = starter;
         
         for (String v : data) {
             
@@ -67,20 +84,9 @@ abstract class AccumulatorItem extends AbstractItem {
                 break;
             }
             
-            res = accumulate(res, Integer.parseInt(v));
+            res = operation.apply(res, Integer.parseInt(v));
         }
         
         return String.valueOf(res);
     }
-    
-    /**
-     * <p>
-     * Performs accumulation.
-     * </p>
-     * 
-     * @param what current value
-     * @param with value to accumulate
-     * @return the result of accumulation
-     */
-    protected abstract int accumulate(int what, int with);
 }
